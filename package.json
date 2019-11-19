@@ -2,9 +2,10 @@
   "name": "babel-plugin-add-key-for-each-child",
   "version": "1.0.0",
   "description": "add key for each child",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "babel "
+    "build": "babel ./src/index.js -o ./dist/index.js",
+    "build-prod": "babel ./src/index.js -o ./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,12 @@
   },
   "homepage": "https://github.com/zhangJQK/babel-plugin-add-key-for-each-child#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0"
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1",
+    "braces": "^2.3.2"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.7.0"
   }
 }
