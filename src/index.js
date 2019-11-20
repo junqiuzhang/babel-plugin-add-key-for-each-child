@@ -9,12 +9,13 @@ module.exports = function(babel) {
           path.skip();
         }
         var parentPath = path.findParent(p => t.isCallExpression(p.node));
-        if (parentPath) {
-          var hasMap = parentPath.node.callee && parentPath.node.callee.property && parentPath.node.callee.property.name === 'map';
-          if (hasMap) {
-            path.insertBefore(t.jsxAttribute(t.JSXIdentifier('key'), path.node.value));
-            path.skip();
-          }
+        if (!parentPath) {
+          path.skip();
+        }
+        var hasMap = parentPath.node.callee && parentPath.node.callee.property && parentPath.node.callee.property.name === 'map';
+        if (hasMap) {
+          path.insertBefore(t.jsxAttribute(t.JSXIdentifier('key'), path.node.value));
+          path.skip();
         }
       }
     }
