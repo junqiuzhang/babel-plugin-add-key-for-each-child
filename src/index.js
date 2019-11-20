@@ -5,15 +5,18 @@ module.exports = function(babel) {
     visitor: {
       CallExpression(path, state) {
         var hasMap = path.node && path.node.callee && path.node.callee.property && path.node.callee.property.name === 'map';
-        var hasJsx = path.node && path.node.arguments && path.node.arguments[0] && path.node.arguments[0].body && path.node.arguments[0].body.type === 'JSXElement';
-        if (hasMap && hasJsx) {
+        var jsxPath = path.node && path.node.arguments && path.node.arguments[0] && path.node.arguments[0].body;
+        if (!!jsxPath) {
+          jsxPath = (path.node && path.node.arguments && path.node.arguments[0] && path.node.arguments[0].body && path.node.arguments[0].body.body && path.node.arguments[0].body.body.find(b => b.type === 'ReturnStatement') || {argument: false}).argument;
+        }
+        if (hasMap && !!jsxPath) {
           var params = path.node.arguments[0].params;
-          var attrib = path.node.arguments[0].body.openingElement.attributes;
+          var attrib = jsxPath.openingElement.attributes;
           if (params.length < 2) {
-            path.node.arguments[0].params.push(t.identifier('i'));
+            params.push(t.identifier('i'));
           }
           if (attrib.findIndex(a => a.name && a.name.name === 'key') < 0) {
-            path.node.arguments[0].body.openingElement.attributes.push(t.jsxAttribute(t.jsxIdentifier('key'), t.jsxExpressionContainer(t.identifier('i'))));
+            attrib.push(t.jsxAttribute(t.jsxIdentifier('key'), t.jsxExpressionContainer(t.identifier('i'))));
           }
           path.skip();
         }

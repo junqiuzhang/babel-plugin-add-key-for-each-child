@@ -11,7 +11,9 @@ export default (props) => {
   const num = [1, 2, 3]
   return <div>
     {
-      num.map(o => <Com num={o} />)
+      num.map(o => {
+        return <Com num={o} />
+      })
     }
   </div>
 }
