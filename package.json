@@ -1,12 +1,10 @@
 {
   "name": "babel-plugin-add-key-for-each-child",
   "version": "1.0.0",
-  "description": "add key for each child",
-  "main": "./lib/index.js",
+  "description": "babel plugin add key for each child",
+  "main": "./src/index.js",
   "scripts": {
-    "example": "babel --plugins ./src/index.js ./example/index.js",
-    "build": "babel ./src/index.js -o ./lib/index.js",
-    "build-prod": "babel ./src/index.js -o ./lib/index.js"
+    "test": "babel --plugins ./src/index.js ./test/index.js"
   },
   "repository": {
     "type": "git",
@@ -22,6 +20,7 @@
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
     "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
     "braces": "^2.3.2"
   },
   "dependencies": {

@@ -1,10 +1,20 @@
-module.exports = function({ types: babelTypes }) {
+module.exports = function(babel) {
+  var t = babel.types;
   return {
-    name: "add-key-for-each-child",
+    name: "babel-plugin-add-key-for-each-child",
     visitor: {
-      Identifier(path, state) {
-        if (path.node.name === 'map') {
-          path.node.name = 'for'
+      JSXAttribute(path, state) {
+        var hasKey = path.container.findIndex(p => p.name.name === 'key') > -1;
+        if (hasKey) {
+          path.skip();
+        }
+        var parentPath = path.findParent(p => t.isCallExpression(p.node));
+        if (parentPath) {
+          var hasMap = parentPath.node.callee && parentPath.node.callee.property && parentPath.node.callee.property.name === 'map';
+          if (hasMap) {
+            path.insertBefore(t.jsxAttribute(t.JSXIdentifier('key'), path.node.value));
+            path.skip();
+          }
         }
       }
     }
