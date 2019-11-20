@@ -6,16 +6,16 @@ module.exports = function(babel) {
       JSXAttribute(path, state) {
         var hasKey = path.container.findIndex(p => p.name.name === 'key') > -1;
         if (hasKey) {
-          path.skip();
+          path.stop();
         }
         var parentPath = path.findParent(p => t.isCallExpression(p.node));
         if (!parentPath) {
-          path.skip();
+          path.stop();
         }
         var hasMap = parentPath.node.callee && parentPath.node.callee.property && parentPath.node.callee.property.name === 'map';
         if (hasMap) {
           path.insertBefore(t.jsxAttribute(t.JSXIdentifier('key'), path.node.value));
-          path.skip();
+          path.stop();
         }
       }
     }
