@@ -4,7 +4,7 @@
   "description": "babel plugin add key for each child",
   "main": "./src/index.js",
   "scripts": {
-    "test": "babel --plugins ./src/index.js ./test/index.js"
+    "test": "babel ./test/input.js -o ./test/output.js"
   },
   "repository": {
     "type": "git",
@@ -19,11 +19,7 @@
   "devDependencies": {
     "@babel/cli": "^7.7.0",
     "@babel/core": "^7.7.2",
-    "@babel/preset-env": "^7.7.1",
-    "@babel/preset-react": "^7.7.0",
+    "@babel/plugin-syntax-jsx": "^7.2.0",
     "braces": "^2.3.2"
-  },
-  "dependencies": {
-    "@babel/polyfill": "^7.7.0"
   }
 }

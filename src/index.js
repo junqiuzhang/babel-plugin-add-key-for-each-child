@@ -3,19 +3,13 @@ module.exports = function(babel) {
   return {
     name: "babel-plugin-add-key-for-each-child",
     visitor: {
-      JSXAttribute(path, state) {
-        var hasKey = path.container.findIndex(p => p.name.name === 'key') > -1;
-        if (hasKey) {
-          path.stop();
-        }
-        var parentPath = path.findParent(p => t.isCallExpression(p.node));
-        if (!parentPath) {
-          path.stop();
-        }
-        var hasMap = parentPath.node.callee && parentPath.node.callee.property && parentPath.node.callee.property.name === 'map';
-        if (hasMap) {
-          path.insertBefore(t.jsxAttribute(t.JSXIdentifier('key'), path.node.value));
-          path.stop();
+      CallExpression(path, state) {
+        var hasMap = path.node && path.node.callee && path.node.callee.property && path.node.callee.property.name === 'map';
+        var hasJsx = path.node && path.node.arguments && path.node.arguments[0] && path.node.arguments[0].body && path.node.arguments[0].body.type === 'JSXElement';
+        if (hasMap && hasJsx) {
+          path.node.arguments[0].params.push(t.identifier('i'));
+          path.node.arguments[0].body.openingElement.attributes.push(t.jsxAttribute(t.jsxIdentifier('key'), t.jsxExpressionContainer(t.identifier('i'))));
+          path.skip();
         }
       }
     }
