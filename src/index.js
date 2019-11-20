@@ -3,8 +3,8 @@ module.exports = function({ types: babelTypes }) {
     name: "add-key-for-each-child",
     visitor: {
       Identifier(path, state) {
-        if (path.node.name === 'bad') {
-          path.node.name = 'good';
+        if (path.node.name === 'map') {
+          path.node.name = 'for'
         }
       }
     }
