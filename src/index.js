@@ -20,22 +20,24 @@ module.exports = function(babel) {
           // jsx属性
           var attrib = jsxNode.openingElement.attributes;
           var identi;
-          // map callback三个参数
-          if (params.findIndex(p => p.name === 'i') === -1) {
-            identi = 'i';
-          } else if (params.findIndex(p => p.name === 'j') === -1) {
-            identi = 'j';
-          } else if (params.findIndex(p => p.name === 'k') === -1) {
-            identi = 'k';
-          } else {
-            identi = 'l';
-          }
           if (params.length > 1) {
+            // 若map callback参数大于1，则identi值取参数值
             identi = params[1].name;
           } else {
+            // 若map callback参数小于等于1，则identi值取i、j、k、l
+            if (params.findIndex(p => p.name === 'i') === -1) {
+              identi = 'i';
+            } else if (params.findIndex(p => p.name === 'j') === -1) {
+              identi = 'j';
+            } else if (params.findIndex(p => p.name === 'k') === -1) {
+              identi = 'k';
+            } else {
+              identi = 'l';
+            }
             params.push(t.identifier(identi));
           }
           if (attrib.findIndex(a => a.name && a.name.name === 'key') === -1) {
+            // 若jsx props中没有key，则props中添加key
             attrib.push(t.jsxAttribute(t.jsxIdentifier('key'), t.jsxExpressionContainer(t.identifier(identi))));
           }
         }
