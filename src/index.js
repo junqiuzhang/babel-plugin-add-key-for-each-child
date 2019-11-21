@@ -24,15 +24,11 @@ module.exports = function(babel) {
             // 若map callback参数大于1，则identi值取参数值
             identi = params[1].name;
           } else {
-            // 若map callback参数小于等于1，则identi值取i、j、k、l
+            // 若map callback参数小于等于1，则identi值取i、j
             if (params.findIndex(p => p.name === 'i') === -1) {
               identi = 'i';
-            } else if (params.findIndex(p => p.name === 'j') === -1) {
-              identi = 'j';
-            } else if (params.findIndex(p => p.name === 'k') === -1) {
-              identi = 'k';
             } else {
-              identi = 'l';
+              identi = 'j';
             }
             params.push(t.identifier(identi));
           }

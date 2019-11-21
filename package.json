@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-add-key-for-each-child",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "babel plugin add key for each child",
   "main": "./src/index.js",
   "scripts": {
